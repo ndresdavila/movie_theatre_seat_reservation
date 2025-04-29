@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CinemaReservation.Domain\CinemaReservation.Domain.csproj" />
+    <ProjectReference Include="..\CinemaReservation.Infrastructure\CinemaReservation.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
