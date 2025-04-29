@@ -2,6 +2,7 @@ using CinemaReservation.Domain.Entities;
 using CinemaReservation.Infrastructure.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CinemaReservation.Domain.Interfaces;
 
 namespace CinemaReservation.Application.Services
 {

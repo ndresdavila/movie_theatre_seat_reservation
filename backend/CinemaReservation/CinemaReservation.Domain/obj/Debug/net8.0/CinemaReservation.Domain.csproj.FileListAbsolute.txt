@@ -1,0 +1,12 @@
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/bin/Debug/net8.0/CinemaReservation.Domain.deps.json
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/bin/Debug/net8.0/CinemaReservation.Domain.dll
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/bin/Debug/net8.0/CinemaReservation.Domain.pdb
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/CinemaReservation.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/CinemaReservation.Domain.AssemblyInfoInputs.cache
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/CinemaReservation.Domain.AssemblyInfo.cs
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/CinemaReservation.Domain.csproj.CoreCompileInputs.cache
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/CinemaReservation.Domain.sourcelink.json
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/CinemaReservation.Domain.dll
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/refint/CinemaReservation.Domain.dll
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/CinemaReservation.Domain.pdb
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/Debug/net8.0/ref/CinemaReservation.Domain.dll
