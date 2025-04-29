@@ -1,0 +1,116 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "CinemaReservation.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "CinemaReservation.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CinemaReservation.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CinemaReservation.Application.dll": {}
+        }
+      },
+      "CinemaReservation.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CinemaReservation.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CinemaReservation.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CinemaReservation.Application/1.0.0": {
+      "type": "project",
+      "path": "../CinemaReservation.Application/CinemaReservation.Application.csproj",
+      "msbuildProject": "../CinemaReservation.Application/CinemaReservation.Application.csproj"
+    },
+    "CinemaReservation.Domain/1.0.0": {
+      "type": "project",
+      "path": "../CinemaReservation.Domain/CinemaReservation.Domain.csproj",
+      "msbuildProject": "../CinemaReservation.Domain/CinemaReservation.Domain.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "CinemaReservation.Application >= 1.0.0",
+      "CinemaReservation.Domain >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/andres/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj",
+      "projectName": "CinemaReservation.Infrastructure",
+      "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj",
+      "packagesPath": "/Users/andres/.nuget/packages/",
+      "outputPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/andres/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj": {
+              "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj"
+            },
+            "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj": {
+              "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
