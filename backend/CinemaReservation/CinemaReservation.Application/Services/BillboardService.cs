@@ -121,5 +121,8 @@ namespace CinemaReservation.Application.Services
 
             return occupiedSeats;
         }
+
+        
+    
     }
 }

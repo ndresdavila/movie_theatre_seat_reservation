@@ -32,6 +32,7 @@ builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<SeatService>();
 builder.Services.AddScoped<BillboardService>();
+builder.Services.AddScoped<CancelBillboardService>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();

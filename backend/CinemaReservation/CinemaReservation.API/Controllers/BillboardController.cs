@@ -5,6 +5,7 @@ using CinemaReservation.Domain.Enums;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using CinemaReservation.Application.Exceptions;
 
 namespace CinemaReservation.API.Controllers
 {
@@ -13,10 +14,14 @@ namespace CinemaReservation.API.Controllers
     public class BillboardController : ControllerBase
     {
         private readonly BillboardService _billboardService;
+        private readonly CancelBillboardService _cancelBillboardService;
 
-        public BillboardController(BillboardService billboardService)
+        public BillboardController(
+            BillboardService billboardService,
+            CancelBillboardService cancelBillboardService)
         {
             _billboardService = billboardService;
+            _cancelBillboardService = cancelBillboardService;
         }
 
         // GET: api/billboard
@@ -91,5 +96,25 @@ namespace CinemaReservation.API.Controllers
             var seats = await _billboardService.GetOccupiedSeatsByBillboardAsync();
             return Ok(seats);
         }
+
+        // DELETE: api/billboard/cancel-with-reservations/5
+        [HttpDelete("cancel-with-reservations/{id}")]
+        public async Task<IActionResult> CancelBillboardAndReservations(int id)
+        {
+            try
+            {
+                await _cancelBillboardService.CancelBillboardAndReservationsAsync(id);
+                return Ok("Cartelera cancelada correctamente.");
+            }
+            catch (PastBillboardCancellationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error inesperado: {ex.Message}");
+            }
+        }
+
     }
 }

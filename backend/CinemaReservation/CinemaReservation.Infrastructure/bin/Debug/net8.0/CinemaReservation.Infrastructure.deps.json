@@ -724,6 +724,9 @@
       },
       "System.Threading.Channels/7.0.0": {},
       "CinemaReservation.Domain/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.4"
+        },
         "runtime": {
           "CinemaReservation.Domain.dll": {
             "assemblyVersion": "1.0.0",
