@@ -23,7 +23,7 @@ namespace CinemaReservation.Infrastructure.Repositories
                                           .Where(s => s.RoomId == roomId)
                                           .ToListAsync();
             var occupiedSeats = await _context.Set<BookingEntity>()
-                                              .Where(b => b.Seat.RoomId == roomId)
+                                              .Where(b => b.Seat != null && b.Seat.RoomId == roomId)
                                               .Select(b => b.SeatId)
                                               .ToListAsync();
 

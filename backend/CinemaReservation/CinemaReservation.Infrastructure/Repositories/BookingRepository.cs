@@ -24,9 +24,11 @@ namespace CinemaReservation.Infrastructure.Repositories
             return await _context.Set<BookingEntity>()
                                  .Include(b => b.Billboard)
                                  .ThenInclude(b => b.Movie)
-                                 .Where(b => b.Billboard.Movie.Genre == genre &&
-                                             b.Billboard.Date >= startDate &&
-                                             b.Billboard.Date <= endDate)
+                                 .Where(b => b.Billboard != null &&
+                                        b.Billboard.Movie != null &&
+                                        b.Billboard.Movie.Genre == genre &&
+                                        b.Billboard.Date >= startDate &&
+                                        b.Billboard.Date <= endDate)
                                  .ToListAsync();
         }
 
@@ -36,7 +38,10 @@ namespace CinemaReservation.Infrastructure.Repositories
                                           .Where(s => s.RoomId == roomId)
                                           .ToListAsync();
             var bookedSeats = await _context.Set<BookingEntity>()
-                                            .Where(b => b.Billboard.Date.Date == date.Date && b.Seat.RoomId == roomId)
+                                            .Where(b => b.Billboard != null &&
+                                                   b.Seat != null &&
+                                                   b.Billboard.Date.Date == date.Date &&
+                                                   b.Seat.RoomId == roomId)
                                             .Select(b => b.SeatId)
                                             .ToListAsync();
 

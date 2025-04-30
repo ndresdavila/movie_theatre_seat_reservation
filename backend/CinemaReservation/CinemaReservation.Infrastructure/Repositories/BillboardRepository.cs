@@ -23,17 +23,18 @@ namespace CinemaReservation.Infrastructure.Repositories
         {
             return await _context.Set<BillboardEntity>()
                                  .Include(b => b.Movie)
-                                 .Where(b => b.Movie.Genre == genre &&
-                                             b.Date >= startDate &&
-                                             b.Date <= endDate)
+                                 .Where(b => b.Movie != null && 
+                                        b.Movie.Genre == genre &&
+                                        b.Date >= startDate &&
+                                        b.Date <= endDate)
                                  .ToListAsync();
         }
 
         public async Task<IEnumerable<SeatEntity>> GetOccupiedSeatsForBillboardAsync(int billboardId)
         {
             return await _context.Set<BookingEntity>()
-                                 .Where(b => b.BillboardId == billboardId)
-                                 .Select(b => b.Seat)
+                                 .Where(b => b.BillboardId == billboardId && b.Seat != null)
+                                 .Select(b => b.Seat!)
                                  .ToListAsync();
         }
     }

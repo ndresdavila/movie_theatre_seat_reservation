@@ -18,9 +18,17 @@ namespace CinemaReservation.Infrastructure.Repositories
 
         public async Task<CustomerEntity> GetByDocumentNumberAsync(string documentNumber)
         {
-            return await _context.Set<CustomerEntity>()
-                                 .Where(c => c.DocumentNumber == documentNumber)
-                                 .FirstOrDefaultAsync();
+            var customer = await _context.Set<CustomerEntity>()
+                                         .Where(c => c.DocumentNumber == documentNumber)
+                                         .FirstOrDefaultAsync();
+        
+            if (customer == null)
+            {
+                throw new InvalidOperationException("Customer not found");
+            }
+        
+            return customer;
         }
+
     }
 }
