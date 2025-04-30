@@ -27,7 +27,7 @@ builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 
 // Servicios de dominio
 builder.Services.AddScoped<MovieService>();
-builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<SeatService>();

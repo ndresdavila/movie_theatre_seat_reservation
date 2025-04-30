@@ -62,5 +62,8 @@ namespace CinemaReservation.Infrastructure.Repositories
 
             return allSeats.Where(s => !bookedSeats.Contains(s.Id));
         }
+
+        
+
     }
 }

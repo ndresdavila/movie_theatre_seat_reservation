@@ -1,5 +1,6 @@
-using CinemaReservation.Application.Services;
+using CinemaReservation.Application.DTOs;
 using CinemaReservation.Domain.Entities;
+using CinemaReservation.Domain.Interfaces; // <-- Cambia esto
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,9 +11,9 @@ namespace CinemaReservation.API.Controllers
     [Route("api/[controller]")]
     public class BookingController : ControllerBase
     {
-        private readonly BookingService _bookingService;
+        private readonly IBookingService _bookingService; // <-- Usa la interfaz
 
-        public BookingController(BookingService bookingService)
+        public BookingController(IBookingService bookingService) // <-- Usa la interfaz
         {
             _bookingService = bookingService;
         }
@@ -62,6 +63,13 @@ namespace CinemaReservation.API.Controllers
         {
             var bookings = await _bookingService.GetHorrorBookingsInDateRangeAsync(startDate, endDate);
             return Ok(bookings);
+        }
+
+        [HttpGet("seat-status")]
+        public async Task<ActionResult<IEnumerable<RoomSeatStatusDto>>> GetSeatStatusByRoomForToday()
+        {
+            var seatStatuses = await _bookingService.GetSeatStatusByRoomForTodayAsync();
+            return Ok(seatStatuses);
         }
     }
 }

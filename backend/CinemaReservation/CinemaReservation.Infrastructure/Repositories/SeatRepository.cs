@@ -21,6 +21,7 @@ namespace CinemaReservation.Infrastructure.Repositories
         {
             var allSeats = await _context.Set<SeatEntity>()
                                           .Where(s => s.RoomId == roomId)
+                                          .Include(s => s.Room)
                                           .ToListAsync();
             var occupiedSeats = await _context.Set<BookingEntity>()
                                               .Where(b => b.Seat != null && b.Seat.RoomId == roomId)
