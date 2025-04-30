@@ -56,5 +56,12 @@ namespace CinemaReservation.API.Controllers
             await _bookingService.DeleteBookingAsync(id);
             return NoContent();
         }
+
+        [HttpGet("horror")]
+        public async Task<IActionResult> GetHorrorBookingsInDateRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            var bookings = await _bookingService.GetHorrorBookingsInDateRangeAsync(startDate, endDate);
+            return Ok(bookings);
+        }
     }
 }

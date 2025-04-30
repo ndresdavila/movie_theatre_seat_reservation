@@ -19,6 +19,21 @@ namespace CinemaReservation.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<BookingEntity>> GetHorrorBookingsInDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            // Especifica que las fechas son UTC
+            var startUtc = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
+            var endUtc = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
+        
+            return await _context.Bookings
+                .Include(b => b.Billboard)
+                    .ThenInclude(bb => bb.Movie)
+                .Include(b => b.Customer)
+                .Where(b => b.Billboard.Movie.Genre == MovieGenreEnum.HORROR &&
+                            b.Date >= startUtc && b.Date <= endUtc)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<BookingEntity>> GetBookingsByMovieGenreAsync(MovieGenreEnum genre, DateTime startDate, DateTime endDate)
         {
             return await _context.Set<BookingEntity>()

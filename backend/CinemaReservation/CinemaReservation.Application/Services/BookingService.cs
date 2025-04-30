@@ -8,9 +8,9 @@ namespace CinemaReservation.Application.Services
 {
     public class BookingService
     {
-        private readonly IRepository<BookingEntity> _bookingRepository;
+        private readonly IBookingRepository _bookingRepository;
 
-        public BookingService(IRepository<BookingEntity> bookingRepository)
+        public BookingService(IBookingRepository bookingRepository)
         {
             _bookingRepository = bookingRepository;
         }
@@ -39,5 +39,11 @@ namespace CinemaReservation.Application.Services
         {
             await _bookingRepository.DeleteAsync(id);
         }
+
+        public async Task<IEnumerable<BookingEntity>> GetHorrorBookingsInDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            return await _bookingRepository.GetHorrorBookingsInDateRangeAsync(startDate, endDate);
+        }
+
     }
 }
