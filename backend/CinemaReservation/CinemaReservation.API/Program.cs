@@ -3,6 +3,7 @@ using CinemaReservation.Infrastructure.Data;
 using CinemaReservation.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using CinemaReservation.Domain.Interfaces;
+using CinemaReservation.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<CinemaDbContext>(options =>
 
 // Repositorio genérico
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IRepository<BookingEntity>, BookingRepository>();
 
 // Repositorios para demás entidades
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
@@ -29,6 +31,7 @@ builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<SeatService>();
+builder.Services.AddScoped<BillboardService>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();

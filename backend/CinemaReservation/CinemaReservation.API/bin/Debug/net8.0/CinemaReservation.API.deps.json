@@ -788,7 +788,6 @@
         "dependencies": {
           "CinemaReservation.Domain": "1.0.0",
           "CinemaReservation.Infrastructure": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "9.0.4",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4"
         },
         "runtime": {
