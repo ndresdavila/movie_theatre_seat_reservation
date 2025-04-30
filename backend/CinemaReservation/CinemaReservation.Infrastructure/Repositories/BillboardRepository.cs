@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using CinemaReservation.Domain.Entities;
 using CinemaReservation.Domain.Interfaces;
 using CinemaReservation.Domain.Enums;
+using CinemaReservation.Infrastructure.Data;
 
 namespace CinemaReservation.Infrastructure.Repositories
 {
     public class BillboardRepository : Repository<BillboardEntity>, IBillboardRepository
     {
-        private readonly DbContext _context;
+        private readonly CinemaDbContext _context;
 
-        public BillboardRepository(DbContext context) : base(context)
+        public BillboardRepository(CinemaDbContext context) : base(context)
         {
             _context = context;
         }

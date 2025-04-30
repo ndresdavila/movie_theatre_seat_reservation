@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using CinemaReservation.Domain.Enums;
 using CinemaReservation.Domain.Entities;
 using CinemaReservation.Domain.Interfaces;
+using CinemaReservation.Infrastructure.Data;
 
 namespace CinemaReservation.Infrastructure.Repositories
 {
     public class BookingRepository : Repository<BookingEntity>, IBookingRepository
     {
-        private readonly DbContext _context;
+        private readonly CinemaDbContext _context;
 
-        public BookingRepository(DbContext context) : base(context)
+        public BookingRepository(CinemaDbContext context) : base(context)
         {
             _context = context;
         }

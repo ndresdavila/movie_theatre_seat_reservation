@@ -9,10 +9,16 @@ namespace CinemaReservation.Infrastructure.Data
     {
         public CinemaDbContext CreateDbContext(string[] args)
         {
+            // Busca el appsettings.json en el proyecto API
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../CinemaReservation.API"))
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
             var optionsBuilder = new DbContextOptionsBuilder<CinemaDbContext>();
-            
-            // Configura la conexión a la base de datos (ajusta según tus necesidades)
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=cinema_db;Username=postgres;Password=asdf");
+            optionsBuilder.UseNpgsql(connectionString);
 
             return new CinemaDbContext(optionsBuilder.Options);
         }

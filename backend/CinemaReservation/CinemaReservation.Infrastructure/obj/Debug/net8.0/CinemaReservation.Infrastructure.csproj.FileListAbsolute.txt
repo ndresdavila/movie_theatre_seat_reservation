@@ -1,4 +1,5 @@
 /Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/bin/Debug/net8.0/CinemaReservation.Infrastructure.deps.json
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/bin/Debug/net8.0/CinemaReservation.Infrastructure.runtimeconfig.json
 /Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/bin/Debug/net8.0/CinemaReservation.Infrastructure.dll
 /Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/bin/Debug/net8.0/CinemaReservation.Infrastructure.pdb
 /Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/bin/Debug/net8.0/CinemaReservation.Domain.dll
@@ -13,6 +14,5 @@
 /Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/obj/Debug/net8.0/CinemaReservation.Infrastructure.dll
 /Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/obj/Debug/net8.0/refint/CinemaReservation.Infrastructure.dll
 /Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/obj/Debug/net8.0/CinemaReservation.Infrastructure.pdb
-/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/obj/Debug/net8.0/ref/CinemaReservation.Infrastructure.dll
-/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/bin/Debug/net8.0/CinemaReservation.Infrastructure.runtimeconfig.json
 /Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/obj/Debug/net8.0/CinemaReservation.Infrastructure.genruntimeconfig.cache
+/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/obj/Debug/net8.0/ref/CinemaReservation.Infrastructure.dll

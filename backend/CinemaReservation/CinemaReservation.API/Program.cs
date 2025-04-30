@@ -16,6 +16,13 @@ builder.Services.AddDbContext<CinemaDbContext>(options =>
 // Repositorio genérico
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+// Repositorios para demás entidades
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IBillboardRepository, BillboardRepository>();
+builder.Services.AddScoped<ISeatRepository, SeatRepository>();
+
 // Servicios de dominio
 builder.Services.AddScoped<MovieService>();
 builder.Services.AddScoped<BookingService>();

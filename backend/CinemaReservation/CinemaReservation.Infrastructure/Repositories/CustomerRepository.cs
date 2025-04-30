@@ -3,14 +3,15 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CinemaReservation.Domain.Entities;
 using CinemaReservation.Domain.Interfaces;
+using CinemaReservation.Infrastructure.Data;
 
 namespace CinemaReservation.Infrastructure.Repositories
 {
     public class CustomerRepository : Repository<CustomerEntity>, ICustomerRepository
     {
-        private readonly DbContext _context;
+        private readonly CinemaDbContext _context;
 
-        public CustomerRepository(DbContext context) : base(context)
+        public CustomerRepository(CinemaDbContext context) : base(context)
         {
             _context = context;
         }

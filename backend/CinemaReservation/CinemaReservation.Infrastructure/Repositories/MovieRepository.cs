@@ -5,14 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using CinemaReservation.Domain.Entities;
 using CinemaReservation.Domain.Interfaces;
 using CinemaReservation.Domain.Enums;
+using CinemaReservation.Infrastructure.Data;
 
 namespace CinemaReservation.Infrastructure.Repositories
 {
     public class MovieRepository : Repository<MovieEntity>, IMovieRepository
     {
-        private readonly DbContext _context;
+        private readonly CinemaDbContext _context;
 
-        public MovieRepository(DbContext context) : base(context)
+        public MovieRepository(CinemaDbContext context) : base(context)
         {
             _context = context;
         }

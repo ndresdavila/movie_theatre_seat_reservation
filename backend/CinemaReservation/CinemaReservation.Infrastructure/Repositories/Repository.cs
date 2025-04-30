@@ -2,14 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CinemaReservation.Domain.Interfaces;
+using CinemaReservation.Infrastructure.Data;
 
 namespace CinemaReservation.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly DbContext _context;
+        private readonly CinemaDbContext _context;
 
-        public Repository(DbContext context)
+        public Repository(CinemaDbContext context)
         {
             _context = context;
         }
