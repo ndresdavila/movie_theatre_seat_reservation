@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using CinemaReservation.Domain.Enums;
 using CinemaReservation.Tests.Utils;
+using CinemaReservation.Domain.Interfaces;
 
 namespace CinemaReservation.Tests
 {
@@ -90,53 +91,52 @@ namespace CinemaReservation.Tests
 
         [Fact]
         public async Task CancelBillboard_ThrowsException_WhenDateIsPast()
-{
-    // Arrange
-    await using var scope = _factory.Services.CreateAsyncScope();
-    var db = scope.ServiceProvider.GetRequiredService<CinemaDbContext>();
+        {
+            // Arrange
+            await using var scope = _factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<CinemaDbContext>();
 
-    db.Billboards.RemoveRange(db.Billboards);
-    db.Movies.RemoveRange(db.Movies);
-    db.Rooms.RemoveRange(db.Rooms);
-    await db.SaveChangesAsync();
+            db.Billboards.RemoveRange(db.Billboards);
+            db.Movies.RemoveRange(db.Movies);
+            db.Rooms.RemoveRange(db.Rooms);
+            await db.SaveChangesAsync();
 
-    var movie = new MovieEntity(
-        name: "Pelicula antigua",
-        genre: MovieGenreEnum.DRAMA,
-        allowedAge: 18,
-        lengthMinutes: 90
-    );
+            var movie = new MovieEntity(
+                name: "Pelicula antigua",
+                genre: MovieGenreEnum.DRAMA,
+                allowedAge: 18,
+                lengthMinutes: 90
+            );
 
-    var room = new RoomEntity(
-        name: "Sala 2",
-        number: 2
-    );
+            var room = new RoomEntity(
+                name: "Sala 2",
+                number: 2
+            );
 
-    db.Movies.Add(movie);
-    db.Rooms.Add(room);
-    await db.SaveChangesAsync();
+            db.Movies.Add(movie);
+            db.Rooms.Add(room);
+            await db.SaveChangesAsync();
 
-    var billboard = new BillboardEntity(
-        date: DateTime.UtcNow.AddDays(-1),
-        startTime: new TimeSpan(10, 0, 0),
-        endTime: new TimeSpan(12, 0, 0),
-        movieId: movie.Id,
-        roomId: room.Id
-    );
+            var billboard = new BillboardEntity(
+                date: DateTime.UtcNow.AddDays(-1),
+                startTime: new TimeSpan(10, 0, 0),
+                endTime: new TimeSpan(12, 0, 0),
+                movieId: movie.Id,
+                roomId: room.Id
+            );
 
-    db.Billboards.Add(billboard);
-    await db.SaveChangesAsync();
+            db.Billboards.Add(billboard);
+            await db.SaveChangesAsync();
 
-    var id = billboard.Id;
+            var id = billboard.Id;
 
-    // Act
-    var response = await _client.DeleteAsync($"/api/billboard/cancel-with-reservations/{id}");
+            // Act
+            var response = await _client.DeleteAsync($"/api/billboard/cancel-with-reservations/{id}");
 
-    // Assert
-    Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-    var content = await response.Content.ReadAsStringAsync();
-    Assert.Contains("no se puede cancelar una cartelera cuya fecha ya ha pasado", content.ToLower());
-}
-
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var content = await response.Content.ReadAsStringAsync();
+            Assert.Contains("no se puede cancelar una cartelera cuya fecha ya ha pasado", content.ToLower());
+        }
     }
 }
