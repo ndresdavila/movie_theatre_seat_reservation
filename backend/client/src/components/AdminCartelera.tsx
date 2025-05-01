@@ -1,91 +1,114 @@
-import React, { useState } from 'react';
-import { createBillboard } from '../services/reservationService';
-import { CreateBillboardDto } from '../types/Billboard';
+// AdminCartelera.tsx
+import React, { useEffect, useState } from 'react';
+import { getAllBillboards, deleteBillboard, getMovies, getRooms } from '../services/reservationService';
+import { Billboard } from '../types/Billboard';
+import { Movie } from '../types/Movie';
+import { Room } from '../types/Room';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AdminCartelera = () => {
-  const [movieId, setMovieId] = useState<number>(0);
-  const [roomId, setRoomId] = useState<number>(0);
-  const [date, setDate] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
+  const [billboards, setBillboards] = useState<Billboard[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const navigate = useNavigate();
 
-  const handleCreateBillboard = async () => {
-    const billboardData: CreateBillboardDto = {
-      movieId,
-      roomId,
-      startTime,
-      endTime,
-      date,
+  useEffect(() => {
+    // 1) Cargo carteleras
+    const fetchBillboards = async () => {
+      try {
+        const res = await getAllBillboards();
+        setBillboards(res.data);
+      } catch (error) {
+        console.error("Error al obtener las carteleras", error);
+      }
+    };
+    // 2) Cargo películas
+    const fetchMovies = async () => {
+      try {
+        const list = await getMovies();
+        setMovies(list);
+      } catch (error) {
+        console.error("Error al obtener películas", error);
+      }
+    };
+    // 3) Cargo salas
+    const fetchRooms = async () => {
+      try {
+        const list = await getRooms();
+        setRooms(list);
+      } catch (error) {
+        console.error("Error al obtener salas", error);
+      }
     };
 
+    fetchBillboards();
+    fetchMovies();
+    fetchRooms();
+  }, []);
+
+  const handleDeleteBillboard = async (id: number) => {
     try {
-      await createBillboard(billboardData);
-      alert("Cartelera creada exitosamente");
+      await deleteBillboard(id);
+      setBillboards(billboards.filter(b => b.id !== id));
+      alert("Cartelera eliminada exitosamente");
     } catch (error) {
-      console.error("Error al crear cartelera", error);
+      console.error("Error al eliminar cartelera", error);
     }
   };
 
+  const handleEditBillboard = (id: number) => {
+    navigate(`/editar-cartelera/${id}`);
+  };
+
+  // Helper para mostrar nombre
+  const getMovieName = (movieId: number) =>
+    movies.find(m => m.id === movieId)?.name ?? `#${movieId}`;
+  const getRoomName = (roomId: number) =>
+    rooms.find(r => r.id === roomId)?.name ?? `#${roomId}`;
+
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Crear Cartelera</h2>
-      <div className="space-y-4">
-        <div>
-          <label htmlFor="movieId" className="block font-medium">ID de la película</label>
-          <input
-            id="movieId"
-            type="number"
-            value={movieId}
-            onChange={(e) => setMovieId(Number(e.target.value))}
-            className="w-full p-2 border rounded"
-            placeholder="Ingresa el ID de la película"
-          />
-        </div>
-        <div>
-          <label htmlFor="roomId" className="block font-medium">ID de la sala</label>
-          <input
-            id="roomId"
-            type="number"
-            value={roomId}
-            onChange={(e) => setRoomId(Number(e.target.value))}
-            className="w-full p-2 border rounded"
-            placeholder="Ingresa el ID de la sala"
-          />
-        </div>
-        <div>
-          <label htmlFor="date" className="block font-medium">Fecha de la función</label>
-          <input
-            id="date"
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <div>
-          <label htmlFor="startTime" className="block font-medium">Hora de inicio</label>
-          <input
-            id="startTime"
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <div>
-          <label htmlFor="endTime" className="block font-medium">Hora de fin</label>
-          <input
-            id="endTime"
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <button onClick={handleCreateBillboard} className="bg-blue-500 text-white py-2 px-4 rounded">
-          Crear Cartelera
-        </button>
-      </div>
+      <h2 className="text-2xl font-semibold mb-4">Administrar Carteleras</h2>
+      <Link
+        to="/formulario-agregar-cartelera"
+        className="bg-green-500 text-white py-2 px-4 rounded mb-4 inline-block"
+      >
+        Agregar Cartelera
+      </Link>
+
+      <table className="table-auto w-full border-collapse">
+        <thead>
+          <tr>
+            <th className="border p-2">Película</th>
+            <th className="border p-2">Sala</th>
+            <th className="border p-2">Fecha</th>
+            <th className="border p-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {billboards.map(b => (
+            <tr key={b.id}>
+              <td className="border p-2">{getMovieName(b.movieId)}</td>
+              <td className="border p-2">{getRoomName(b.roomId)}</td>
+              <td className="border p-2">{new Date(b.date).toLocaleDateString()}</td>
+              <td className="border p-2">
+                <button
+                  onClick={() => handleEditBillboard(b.id)}
+                  className="bg-blue-500 text-white py-1 px-3 rounded mr-2"
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => handleDeleteBillboard(b.id)}
+                  className="bg-red-500 text-white py-1 px-3 rounded"
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

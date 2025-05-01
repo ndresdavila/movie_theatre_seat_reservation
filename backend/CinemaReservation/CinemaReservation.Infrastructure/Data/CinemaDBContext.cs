@@ -20,10 +20,6 @@ namespace CinemaReservation.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<BillboardEntity>()
-                .Property(b => b.Id)
-                .ValueGeneratedNever();  // Desactiva el autoincremento
         }
     }
 }

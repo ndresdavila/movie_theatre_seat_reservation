@@ -1,21 +1,31 @@
 // src/types/Billboard.ts
 
-// Este tipo es para enviar datos para crear una cartelera al backend
+// DTO para crear/actualizar
 export interface CreateBillboardDto {
-    movieId: number;       // ID de la película
-    roomId: number;        // ID de la sala
-    date: string;          // Fecha en formato ISO (YYYY-MM-DD)
-    startTime: string;     // Hora de inicio en formato ISO (HH:MM)
-    endTime: string;       // Hora de fin en formato ISO (HH:MM)
-  }
+  movieId: number;    // ID de la película
+  roomId: number;     // ID de la sala
+  date: string;       // Fecha en ISO: YYYY-MM-DD
+  startTime: string;  // Hora en HH:MM
+  endTime: string;    // Hora en HH:MM
+}
+
+// Lo que realmente recibes del backend
+export interface Billboard {
+  id: number;         // ID de la cartelera
+  movieId: number;    // ahora sí existe
+  roomId: number;     // ID de la sala
+  date: string;       // ISO string
+  startTime: string;
+  endTime: string;
+}
+
   
-  // Este tipo es para representar una cartelera que recibes de la API
-  export interface Billboard {
-    id: number;            // ID de la cartelera
-    movieName: string;     // Nombre de la película
-    date: string;          // Fecha en formato ISO (YYYY-MM-DD)
-    roomId: number;        // ID de la sala
-    startTime: string;     // Hora de inicio en formato ISO (HH:MM)
-    endTime: string;       // Hora de fin en formato ISO (HH:MM)
-  }
+  export type UpdateBillboardDto = {
+    id: number;
+    movieId: number;
+    roomId: number;
+    date: string;
+    startTime: string;
+    endTime: string;
+  };
   

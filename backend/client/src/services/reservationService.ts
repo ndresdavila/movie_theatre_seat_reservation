@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CreateBillboardDto } from "../types/Billboard";
+import { CreateBillboardDto, UpdateBillboardDto } from "../types/Billboard";
 import { CreateBookingDto } from "../types/Booking";
 import { CreateCustomerDto } from "../types/Customer";
 
@@ -52,3 +52,27 @@ export const getCustomerById = (id: number) => {
   return axios.get(`${API_URL}/customer/${id}`); // GET /api/customer/{id}
 };
 
+// Obtener todas las películas
+export const getMovies = async () => {
+  const response = await axios.get(`${API_URL}/Movie`);
+  return response.data;
+};
+
+// Obtener todas las salas
+export const getRooms = async () => {
+  const response = await axios.get(`${API_URL}/Room`);
+  return response.data;
+};
+
+// Métodos para editar y eliminar carteleras
+
+// Editar una cartelera existente
+export const updateBillboard = (billboardData: UpdateBillboardDto) => {
+  return axios.put(`${API_URL}/Billboard/${billboardData.id}`, billboardData);
+};
+
+
+// Eliminar una cartelera por ID
+export const deleteBillboard = (id: number) => {
+  return axios.delete(`${API_URL}/Billboard/${id}`); // DELETE /api/billboard/{id}
+};

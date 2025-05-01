@@ -15,6 +15,10 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<CinemaDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Configura la cadena de conexión a PostgreSQL
+builder.Services.AddDbContext<CinemaDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Repositorio genérico
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IRepository<BookingEntity>, BookingRepository>();
@@ -35,6 +39,17 @@ builder.Services.AddScoped<SeatService>();
 builder.Services.AddScoped<BillboardService>();
 builder.Services.AddScoped<CancelBillboardService>();
 
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // Aquí va el puerto de tu frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -47,6 +62,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Usa CORS antes de cualquier otro middleware
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
@@ -91,9 +109,9 @@ using (var scope = app.Services.CreateScope())
         roomId: room.Id
     )
     {
-    Id = 1  // Asignamos el ID manualmente
+    Id = 100  // Asignamos el ID manualmente
     };
-    futureBillboard.Id = 1;
+    futureBillboard.Id = 100;
 
     var pastBillboard = new BillboardEntity(
         date: pastDate.Date,
@@ -103,9 +121,9 @@ using (var scope = app.Services.CreateScope())
         roomId: room.Id
     )
     {
-    Id = 2  // Asignamos otro ID manualmente
+    Id = 101  // Asignamos otro ID manualmente
     };
-    pastBillboard.Id = 2;
+    pastBillboard.Id = 101;
 
     db.Billboards.AddRange(futureBillboard, pastBillboard);
     db.SaveChanges();
