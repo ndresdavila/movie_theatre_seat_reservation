@@ -21,7 +21,9 @@ namespace CinemaReservation.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuración adicional si la necesitas
+            modelBuilder.Entity<BillboardEntity>()
+                .Property(b => b.Id)
+                .ValueGeneratedNever();  // Desactiva el autoincremento
         }
     }
 }

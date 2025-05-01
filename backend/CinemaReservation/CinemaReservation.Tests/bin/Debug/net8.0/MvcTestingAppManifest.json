@@ -1,0 +1,6 @@
+{
+  "CinemaReservation.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/andres\/Desktop\/Intuito\/backend\/CinemaReservation\/CinemaReservation.API",
+  "CinemaReservation.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/andres\/Desktop\/Intuito\/backend\/CinemaReservation\/CinemaReservation.Application",
+  "CinemaReservation.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/andres\/Desktop\/Intuito\/backend\/CinemaReservation\/CinemaReservation.Domain",
+  "CinemaReservation.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/andres\/Desktop\/Intuito\/backend\/CinemaReservation\/CinemaReservation.Infrastructure"
+}

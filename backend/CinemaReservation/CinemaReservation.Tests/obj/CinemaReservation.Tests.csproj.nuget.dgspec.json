@@ -4,14 +4,179 @@
     "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/CinemaReservation.Tests.csproj": {}
   },
   "projects": {
-    "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/CinemaReservation.Tests.csproj": {
+    "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.API/CinemaReservation.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/CinemaReservation.Tests.csproj",
-        "projectName": "CinemaReservation.Tests",
-        "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/CinemaReservation.Tests.csproj",
+        "projectUniqueName": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.API/CinemaReservation.API.csproj",
+        "projectName": "CinemaReservation.API",
+        "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.API/CinemaReservation.API.csproj",
         "packagesPath": "/Users/andres/.nuget/packages/",
-        "outputPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/obj/",
+        "outputPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/andres/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj"
+              },
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj",
+        "projectName": "CinemaReservation.Application",
+        "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj",
+        "packagesPath": "/Users/andres/.nuget/packages/",
+        "outputPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/andres/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj"
+              },
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj",
+        "projectName": "CinemaReservation.Domain",
+        "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj",
+        "packagesPath": "/Users/andres/.nuget/packages/",
+        "outputPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/andres/.nuget/NuGet/NuGet.Config"
@@ -43,9 +208,172 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj",
+        "projectName": "CinemaReservation.Infrastructure",
+        "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj",
+        "packagesPath": "/Users/andres/.nuget/packages/",
+        "outputPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/andres/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/CinemaReservation.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/CinemaReservation.Tests.csproj",
+        "projectName": "CinemaReservation.Tests",
+        "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/CinemaReservation.Tests.csproj",
+        "packagesPath": "/Users/andres/.nuget/packages/",
+        "outputPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/andres/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.API/CinemaReservation.API.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.API/CinemaReservation.API.csproj"
+              },
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Application/CinemaReservation.Application.csproj"
+              },
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Domain/CinemaReservation.Domain.csproj"
+              },
+              "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj": {
+                "projectPath": "/Users/andres/Desktop/Intuito/backend/CinemaReservation/CinemaReservation.Infrastructure/CinemaReservation.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Testing": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[17.8.0, )"
+              "version": "[17.13.0, )"
             },
             "coverlet.collector": {
               "target": "Package",
@@ -53,11 +381,13 @@
             },
             "xunit": {
               "target": "Package",
-              "version": "[2.5.3, )"
+              "version": "[2.9.3, )"
             },
             "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[2.5.3, )"
+              "version": "[3.0.2, )"
             }
           },
           "imports": [

@@ -4,6 +4,7 @@ using CinemaReservation.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using CinemaReservation.Domain.Interfaces;
 using CinemaReservation.Domain.Entities;
+using CinemaReservation.Domain.Enums;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,9 +49,69 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
+app.MapControllers();
 
-app.MapControllers(); // <- Usa tus propios controladores en lugar de WeatherForecast
+// Seeder: insertar datos si la base está vacía
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CinemaDbContext>();
+    db.Database.Migrate(); // Aplica las migraciones
+
+    db.Bookings.RemoveRange(db.Bookings);
+    db.Billboards.RemoveRange(db.Billboards);
+    db.Seats.RemoveRange(db.Seats);
+    db.Rooms.RemoveRange(db.Rooms);
+    db.Customers.RemoveRange(db.Customers);
+    db.Movies.RemoveRange(db.Movies);
+
+    db.SaveChanges();
+
+    // Luego siembra los datos base
+    var movie = new MovieEntity(
+        name: "Inception",
+        genre: MovieGenreEnum.ACTION,
+        allowedAge: 13,
+        lengthMinutes: 148
+    );
+    db.Movies.Add(movie);
+
+    var room = new RoomEntity(name: "Sala Principal", number: 1);
+    db.Rooms.Add(room);
+    db.SaveChanges();
+
+    var futureDate = DateTime.UtcNow.AddDays(2);
+    var pastDate = DateTime.UtcNow.AddDays(-2);
+
+    var futureBillboard = new BillboardEntity(
+        date: futureDate.Date,
+        startTime: new TimeSpan(18, 0, 0),
+        endTime: new TimeSpan(20, 30, 0),
+        movieId: movie.Id,
+        roomId: room.Id
+    )
+    {
+    Id = 1  // Asignamos el ID manualmente
+    };
+    futureBillboard.Id = 1;
+
+    var pastBillboard = new BillboardEntity(
+        date: pastDate.Date,
+        startTime: new TimeSpan(18, 0, 0),
+        endTime: new TimeSpan(20, 30, 0),
+        movieId: movie.Id,
+        roomId: room.Id
+    )
+    {
+    Id = 2  // Asignamos otro ID manualmente
+    };
+    pastBillboard.Id = 2;
+
+    db.Billboards.AddRange(futureBillboard, pastBillboard);
+    db.SaveChanges();
+}
+
 
 app.Run();
+
+public partial class Program { }

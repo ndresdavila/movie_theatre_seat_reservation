@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CinemaReservation.Application.Exceptions;
+using CinemaReservation.Domain.Exceptions;
 
 namespace CinemaReservation.API.Controllers
 {
@@ -104,17 +105,20 @@ namespace CinemaReservation.API.Controllers
             try
             {
                 await _cancelBillboardService.CancelBillboardAndReservationsAsync(id);
-                return Ok("Cartelera cancelada correctamente.");
+                return NoContent(); // 204, mejor que Ok para operaciones de DELETE exitosas
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message); // 404
             }
             catch (PastBillboardCancellationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message); // 400
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error inesperado: {ex.Message}");
             }
         }
-
     }
 }

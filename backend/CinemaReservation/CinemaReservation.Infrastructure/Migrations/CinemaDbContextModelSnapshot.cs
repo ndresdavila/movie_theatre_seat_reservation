@@ -25,10 +25,7 @@ namespace CinemaReservation.Infrastructure.Migrations
             modelBuilder.Entity("CinemaReservation.Domain.Entities.BillboardEntity", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");

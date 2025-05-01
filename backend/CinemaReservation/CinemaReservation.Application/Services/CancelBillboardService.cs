@@ -8,6 +8,7 @@ using CinemaReservation.Application.Exceptions;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
 using CinemaReservation.Infrastructure.Data;
+using CinemaReservation.Domain.Exceptions;
 
 namespace CinemaReservation.Application.Services
 {
@@ -39,7 +40,7 @@ namespace CinemaReservation.Application.Services
                     var billboard = await _billboardRepository.GetByIdAsync(billboardId);
 
                     if (billboard == null)
-                        throw new Exception("Cartelera no encontrada");
+                        throw new NotFoundException("La cartelera no fue encontrada.");
 
                     if (billboard.Date < DateTime.Now)
                         throw new PastBillboardCancellationException();

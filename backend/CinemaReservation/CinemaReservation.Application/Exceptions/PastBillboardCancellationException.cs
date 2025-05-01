@@ -1,11 +1,9 @@
-using System;
-
-namespace CinemaReservation.Application.Exceptions
+namespace CinemaReservation.Domain.Exceptions
 {
     public class PastBillboardCancellationException : Exception
     {
         public PastBillboardCancellationException()
-            : base("No se puede cancelar funciones de la cartelera con fecha anterior a la actual")
+            : base("No se puede cancelar una cartelera cuya fecha ya ha pasado.")
         {
         }
     }
