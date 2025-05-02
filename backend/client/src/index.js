@@ -11,8 +11,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ReservationProvider>
+      
       <App />
-      {/* Agrega el ToastContainer aquí */}
       <ToastContainer />
     </ReservationProvider>
   </React.StrictMode>

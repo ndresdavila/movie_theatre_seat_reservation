@@ -91,7 +91,7 @@ const ReservationList: React.FC = () => {
                 <td className="px-4 py-2 text-sm">{booking.id}</td>
                 <td className="px-4 py-2 text-sm">{getCustomerName(booking.customerId)}</td>
                 <td className="px-4 py-2 text-sm">{getMovieName(booking.billboardId)}</td>
-                <td className="px-4 py-2 text-sm">{booking.date}</td>
+                <td className="px-4 py-2 text-sm">{booking.date.split('.')[0].replace('T', ' ').slice(0, 16)}</td>
                 <td className="px-4 py-2">
                   <button
                     onClick={() => handleDelete(booking.id)}
