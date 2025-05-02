@@ -20,6 +20,11 @@ namespace CinemaReservation.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+        
+            modelBuilder.Entity<BookingEntity>()
+                .Property(b => b.Date)
+                .HasDefaultValueSql("NOW()"); // Esto es SQL estándar para la hora actual
         }
+
     }
 }

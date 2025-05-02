@@ -15,5 +15,7 @@ namespace CinemaReservation.Domain.Interfaces
         Task DeleteBookingAsync(int id);
         Task<IEnumerable<BookingEntity>> GetHorrorBookingsInDateRangeAsync(DateTime startDate, DateTime endDate);
         Task<IEnumerable<RoomSeatStatusDto>> GetSeatStatusByRoomForTodayAsync();
+    
+    
     }
 }

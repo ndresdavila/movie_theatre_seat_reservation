@@ -41,6 +41,8 @@ namespace CinemaReservation.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = booking.Id }, booking);
         }
 
+        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] BookingEntity booking)
         {

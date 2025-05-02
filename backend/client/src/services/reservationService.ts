@@ -76,3 +76,10 @@ export const updateBillboard = (billboardData: UpdateBillboardDto) => {
 export const deleteBillboard = (id: number) => {
   return axios.delete(`${API_URL}/Billboard/${id}`); // DELETE /api/billboard/{id}
 };
+
+export const deleteBooking = (id: number) => {
+  return axios.delete(`${API_URL}/booking/${id}`); // DELETE /api/booking/{id}
+};
+
+// Butacas
+export const getAllSeats = () => axios.get(`${API_URL}/seat`);

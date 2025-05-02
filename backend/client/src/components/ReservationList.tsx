@@ -1,32 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { getAllBookings } from '../services/reservationService';
-import { Booking } from '../types/Booking';
+// src/components/ReservationList.tsx
+import React, { useEffect } from 'react';
+import { useReservations } from '../context/ReservationContext';
 
 const ReservationList = () => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const { bookings, loadBookings, removeBooking } = useReservations();
 
   useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const response = await getAllBookings();
-        setBookings(response.data);
-      } catch (error) {
-        console.error("Error fetching bookings", error);
-      }
-    };
-
-    fetchBookings();
-  }, []);
+    loadBookings();
+  }, [loadBookings]);
 
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">Lista de Reservas</h2>
       <div className="space-y-4">
-        {bookings.map((booking) => (
-          <div key={booking.id} className="border p-4 rounded shadow-md">
-            <h3 className="font-medium">{booking.movieName}</h3>
-            <p>Cliente: {booking.customerName}</p>
-            <p>Fecha de la reserva: {new Date(booking.date).toLocaleDateString()}</p>
+        {bookings.map(b => (
+          <div key={b.id} className="border p-4 rounded shadow-md">
+            <h3 className="font-medium">{b.movieName}</h3>
+            <p>Cliente: {b.customerName}</p>
+            <p>Fecha: {new Date(b.date).toLocaleDateString()}</p>
+            <button
+              onClick={() => removeBooking(b.id)}
+              className="bg-red-500 text-white py-1 px-3 rounded"
+            >
+              Eliminar
+            </button>
           </div>
         ))}
       </div>

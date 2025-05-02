@@ -2,7 +2,7 @@
 
 export interface CreateCustomerDto {
     documentNumber: string;
-    firstName: string;
+    name: string;
     lastName: string;
     age: number;
     email?: string;

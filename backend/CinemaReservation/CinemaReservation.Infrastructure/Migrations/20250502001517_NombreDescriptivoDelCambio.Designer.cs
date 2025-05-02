@@ -3,6 +3,7 @@ using System;
 using CinemaReservation.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CinemaReservation.Infrastructure.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250502001517_NombreDescriptivoDelCambio")]
+    partial class NombreDescriptivoDelCambio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,9 +75,7 @@ namespace CinemaReservation.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("NOW()");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("SeatId")
                         .HasColumnType("integer");

@@ -7,7 +7,7 @@ namespace CinemaReservation.Domain.Entities
     public class BookingEntity : BaseEntity
     {
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.UtcNow;
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
@@ -24,7 +24,7 @@ namespace CinemaReservation.Domain.Entities
         // Constructor
         public BookingEntity(DateTime date, int customerId, int seatId, int billboardId)
         {
-            Date = date;
+            //Date = date;
             CustomerId = customerId;
             SeatId = seatId;
             BillboardId = billboardId;

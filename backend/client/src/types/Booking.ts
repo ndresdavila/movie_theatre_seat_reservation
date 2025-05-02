@@ -3,7 +3,7 @@
 export interface CreateBookingDto {
     customerId: number;
     billboardId: number;
-    seatIds: number[];
+    seatId: number;
   }
   
   export interface Booking {

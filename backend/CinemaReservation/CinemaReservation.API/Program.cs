@@ -85,47 +85,68 @@ using (var scope = app.Services.CreateScope())
 
     db.SaveChanges();
 
-    // Luego siembra los datos base
-    var movie = new MovieEntity(
-        name: "Inception",
-        genre: MovieGenreEnum.ACTION,
-        allowedAge: 13,
-        lengthMinutes: 148
-    );
-    db.Movies.Add(movie);
-
-    var room = new RoomEntity(name: "Sala Principal", number: 1);
-    db.Rooms.Add(room);
+    // Agregamos más películas
+    var movies = new List<MovieEntity>
+    {
+        new("Inception", MovieGenreEnum.ACTION, 13, 148),
+        new("The Godfather", MovieGenreEnum.DRAMA, 18, 175),
+        new("Toy Story", MovieGenreEnum.COMEDY, 0, 81),
+        new("Interstellar", MovieGenreEnum.SCIENCE_FICTION, 10, 169),
+        new("The Conjuring", MovieGenreEnum.HORROR, 16, 112)
+    };
+    db.Movies.AddRange(movies);
     db.SaveChanges();
 
+    // Agregamos salas
+    var rooms = new List<RoomEntity>
+    {
+        new("Sala Principal", 1),
+        new("Sala VIP", 2),
+        new("Sala 3D", 3)
+    };
+    db.Rooms.AddRange(rooms);
+    db.SaveChanges();
+
+    // Asientos para cada sala
+    foreach (var room in rooms)
+    {
+        var seatCount = room.Name == "Sala Principal" ? 20 : 10;
+        var seats = new List<SeatEntity>();
+
+        for (short i = 1; i <= seatCount; i++)
+        {
+            // Asignamos fila A para los primeros 10, B para los siguientes
+            short row = (short)(i <= 10 ? 1 : 2);
+            seats.Add(new SeatEntity(number: i, rowNumber: row, roomId: room.Id));
+        }
+
+        db.Seats.AddRange(seats);
+    }
+    db.SaveChanges();
+
+    // Carteleras con fechas futura y pasada para una película y sala
     var futureDate = DateTime.UtcNow.AddDays(2);
     var pastDate = DateTime.UtcNow.AddDays(-2);
 
-    var futureBillboard = new BillboardEntity(
+    var billboard1 = new BillboardEntity(
         date: futureDate.Date,
         startTime: new TimeSpan(18, 0, 0),
         endTime: new TimeSpan(20, 30, 0),
-        movieId: movie.Id,
-        roomId: room.Id
+        movieId: movies[0].Id,
+        roomId: rooms[0].Id
     )
-    {
-    Id = 100  // Asignamos el ID manualmente
-    };
-    futureBillboard.Id = 100;
+    { Id = 100 };
 
-    var pastBillboard = new BillboardEntity(
+    var billboard2 = new BillboardEntity(
         date: pastDate.Date,
         startTime: new TimeSpan(18, 0, 0),
         endTime: new TimeSpan(20, 30, 0),
-        movieId: movie.Id,
-        roomId: room.Id
+        movieId: movies[0].Id,
+        roomId: rooms[0].Id
     )
-    {
-    Id = 101  // Asignamos otro ID manualmente
-    };
-    pastBillboard.Id = 101;
+    { Id = 101 };
 
-    db.Billboards.AddRange(futureBillboard, pastBillboard);
+    db.Billboards.AddRange(billboard1, billboard2);
     db.SaveChanges();
 }
 
