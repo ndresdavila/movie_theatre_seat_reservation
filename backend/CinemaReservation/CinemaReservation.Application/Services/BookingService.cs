@@ -56,6 +56,21 @@ namespace CinemaReservation.Application.Services
 
         public async Task DeleteBookingAsync(int id)
         {
+            // 1. Obtener la reserva
+            var booking = await _bookingRepository.GetByIdAsync(id);
+            if (booking == null)
+                throw new Exception("La reserva no existe.");
+        
+            // 2. Obtener el asiento relacionado
+            var seat = await _seatRepository.GetByIdAsync(booking.SeatId);
+            if (seat != null)
+            {
+                // 3. Marcar el asiento como disponible
+                seat.Status = true;
+                await _seatRepository.UpdateAsync(seat);
+            }
+        
+            // 4. Eliminar la reserva
             await _bookingRepository.DeleteAsync(id);
         }
 
