@@ -67,48 +67,57 @@ const AdminCartelera = () => {
     rooms.find(r => r.id === roomId)?.name ?? `#${roomId}`;
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Administrar Carteleras</h2>
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Administrar Carteleras</h2>
       <Link
         to="/formulario-agregar-cartelera"
-        className="bg-green-500 text-white py-2 px-4 rounded mb-4 inline-block"
+        className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded mb-4 inline-block transition"
       >
         Agregar Cartelera
       </Link>
 
-      <table className="table-auto w-full border-collapse">
-        <thead>
-          <tr>
-            <th className="border p-2">Película</th>
-            <th className="border p-2">Sala</th>
-            <th className="border p-2">Fecha</th>
-            <th className="border p-2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {billboards.map(b => (
-            <tr key={b.id}>
-              <td className="border p-2">{getMovieName(b.movieId)}</td>
-              <td className="border p-2">{getRoomName(b.roomId)}</td>
-              <td className="border p-2">{new Date(b.date).toLocaleDateString()}</td>
-              <td className="border p-2">
-                <button
-                  onClick={() => handleEditBillboard(b.id)}
-                  className="bg-blue-500 text-white py-1 px-3 rounded mr-2"
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => handleDeleteBillboard(b.id)}
-                  className="bg-red-500 text-white py-1 px-3 rounded"
-                >
-                  Eliminar
-                </button>
-              </td>
+      <div className="overflow-x-auto rounded-lg shadow">
+        <table className="min-w-full divide-y divide-gray-200 bg-white">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Película</th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Sala</th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Fecha</th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {billboards.map(b => (
+              <tr key={b.id} className="hover:bg-gray-50">
+                <td className="px-4 py-2 text-sm">{getMovieName(b.movieId)}</td>
+                <td className="px-4 py-2 text-sm">{getRoomName(b.roomId)}</td>
+                <td className="px-4 py-2 text-sm">{new Date(b.date).toLocaleDateString()}</td>
+                <td className="px-4 py-2 space-x-2">
+                  <button
+                    onClick={() => handleEditBillboard(b.id)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded transition"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => handleDeleteBillboard(b.id)}
+                    className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded transition"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {billboards.length === 0 && (
+              <tr>
+                <td colSpan={4} className="px-4 py-4 text-center text-sm text-gray-500">
+                  No hay carteleras registradas.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

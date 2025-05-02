@@ -29,8 +29,7 @@ const Home = (): JSX.Element => (
       <ul>
         <li><a href="/admin-butaca">Administrar Butacas</a></li>
         <li><a href="/admin-cartelera">Administrar Cartelera</a></li>
-        <li><a href="/reservations">Lista de Reservas</a></li>
-        <li><a href="/reservation-form">Hacer Reserva</a></li>
+        <li><a href="/reservations">Administrar Reservas</a></li>
         <li><a href="/customer-info">Información Cliente</a></li>
       </ul>
     </nav>
@@ -49,7 +48,7 @@ const App = (): JSX.Element => {
         <Route path="/formulario-agregar-cartelera" element={<FormularioAgregarCartelera />} />
 
         <Route path="/reservations" element={<ReservationList />} />
-        <Route path="/reservation-form" element={<ReservationForm />} />
+        <Route path="/formulario-agregar-reserva" element={<ReservationForm />} />
         <Route path="/customer-info" element={<CustomerInfo customer={mockCustomer} />} />
       </Routes>
     </Router>
