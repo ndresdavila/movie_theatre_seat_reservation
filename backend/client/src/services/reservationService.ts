@@ -64,13 +64,10 @@ export const getRooms = async () => {
   return response.data;
 };
 
-// Métodos para editar y eliminar carteleras
-
 // Editar una cartelera existente
 export const updateBillboard = (billboardData: UpdateBillboardDto) => {
   return axios.put(`${API_URL}/Billboard/${billboardData.id}`, billboardData);
 };
-
 
 // Eliminar una cartelera por ID
 export const deleteBillboard = (id: number) => {

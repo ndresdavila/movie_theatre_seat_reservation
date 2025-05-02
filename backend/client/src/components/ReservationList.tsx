@@ -1,25 +1,72 @@
-import React, { useEffect } from 'react';
+// src/components/ReservationList.tsx
+import React, { useEffect, useState } from 'react';
 import { useReservations } from '../context/ReservationContext';
 import { Link } from 'react-router-dom';
+import { getAllCustomers, getMovies, getAllBillboards } from '../services/reservationService';
+import type { Customer } from '../types/Customer';
+import type { Movie } from '../types/Movie';
+import type { Billboard } from '../types/Billboard';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ReservationList: React.FC = () => {
   const { bookings, loadBookings, removeBooking } = useReservations();
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [billboards, setBillboards] = useState<Billboard[]>([]);
 
   useEffect(() => {
+    // 1) Cargo reservas
     loadBookings();
+
+    // 2) Cargo todos los clientes
+    getAllCustomers()
+      .then(res => setCustomers(res.data))
+      .catch(err => console.error('Error cargando clientes', err));
+
+    // 3) Cargo todas las películas
+    getMovies()
+      .then(data => setMovies(data))
+      .catch(err => console.error('Error cargando películas', err));
+
+    // 4) Cargo todas las carteleras (para poder mapear billboardId → movieId)
+    getAllBillboards()
+      .then(res => setBillboards(res.data))
+      .catch(err => console.error('Error cargando carteleras', err));
   }, [loadBookings]);
 
-  const handleDelete = (id: number) => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar esta reserva?')) {
-      removeBooking(id);
+  const handleDelete = async (id: number) => {
+
+    try {
+      await removeBooking(id);
+      toast.success('Reserva eliminada con éxito', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+    } catch {
+      toast.error('Error al eliminar la reserva', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
     }
+  };
+
+  const getCustomerName = (customerId: number): string => {
+    const c = customers.find(c => c.id === customerId);
+    return c ? `${c.name} ${c.lastname}` : '–';
+  };
+
+  const getMovieName = (billboardId: number): string => {
+    const bill = billboards.find(b => b.id === billboardId);
+    if (!bill) return '–';
+    const m = movies.find(m => m.id === bill.movieId);
+    return m ? m.name : '–';
   };
 
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Lista de Reservas</h2>
 
-      {/* Botón para agregar nueva reserva */}
       <Link
         to="/formulario-agregar-reserva"
         className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded mb-4 inline-block transition"
@@ -39,11 +86,11 @@ const ReservationList: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {bookings.map((booking) => (
+            {bookings.map((booking: any) => (
               <tr key={booking.id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 text-sm">{booking.id}</td>
-                <td className="px-4 py-2 text-sm">{booking.customerName}</td>
-                <td className="px-4 py-2 text-sm">{booking.movieName}</td>
+                <td className="px-4 py-2 text-sm">{getCustomerName(booking.customerId)}</td>
+                <td className="px-4 py-2 text-sm">{getMovieName(booking.billboardId)}</td>
                 <td className="px-4 py-2 text-sm">{booking.date}</td>
                 <td className="px-4 py-2">
                   <button
@@ -65,6 +112,9 @@ const ReservationList: React.FC = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Contenedor para mostrar los toasts */}
+      <ToastContainer />
     </div>
   );
 };

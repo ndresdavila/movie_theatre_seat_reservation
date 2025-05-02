@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { getBillboardById, updateBillboard, getRooms } from '../services/reservationService';
 import { getAllMovies } from '../services/movieService';
-import { Billboard } from '../types/Billboard';
+import { toast } from 'react-toastify'; // Importa react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Importa los estilos de toastify
 
 type FormData = {
   movieId: number;
@@ -18,7 +18,7 @@ const EditBillboard = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const { register, handleSubmit, reset, formState, watch } = useForm<FormData>({
+  const { register, handleSubmit } = useForm<FormData>({
     defaultValues: async () => {
       const res = await getBillboardById(Number(id));
       const data = res.data;
@@ -58,7 +58,14 @@ const EditBillboard = () => {
 
   const onSubmit = async (data: FormData) => {
     if (!data.movieId || !data.roomId || !data.date || !data.startTime || !data.endTime) {
-      return alert('Por favor, completa todos los campos.');
+      toast.error('Por favor, completa todos los campos.');
+      return;
+    }
+
+    // Validación: La hora de inicio debe ser antes que la hora de fin
+    if (data.startTime >= data.endTime) {
+      toast.error('La hora de inicio debe ser anterior a la hora de fin.');
+      return;
     }
 
     const updated = {
@@ -72,10 +79,27 @@ const EditBillboard = () => {
 
     try {
       await updateBillboard(updated);
-      alert('Cartelera actualizada exitosamente');
+      toast.success('Cartelera actualizada exitosamente', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       navigate('/admin-cartelera');
     } catch (error) {
       console.error('Error al actualizar la cartelera', error);
+      toast.error('No se pudo actualizar la cartelera. Intenta nuevamente.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 

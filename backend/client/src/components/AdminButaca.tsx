@@ -80,7 +80,7 @@ const AdminButaca = () => {
                 key={seat.id}
                 className={`p-4 text-center ${seat.status ? 'bg-green-500' : 'bg-red-500'}`}
               >
-                Fila {seat.rowNumber} - Butaca {seat.seatNumber}
+                Fila {seat.rowNumber} - Butaca {seat.number}
               </div>
             ))}
           </div>
