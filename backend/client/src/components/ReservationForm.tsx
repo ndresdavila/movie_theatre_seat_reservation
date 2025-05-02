@@ -72,7 +72,7 @@ const ReservationForm: React.FC = () => {
   const availableSeats = React.useMemo(() => {
     if (!selectedBillboardId) return [];
     const roomId = billboards.find(b => b.id === +selectedBillboardId)?.roomId;
-    return seats.filter(s => s.roomId === roomId && s.isAvailable !== false);
+    return seats.filter(s => s.roomId === roomId && s.status !== false);
   }, [selectedBillboardId, billboards, seats]);
 
   return (

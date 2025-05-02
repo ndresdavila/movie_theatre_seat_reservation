@@ -32,6 +32,20 @@ namespace CinemaReservation.Application.Services
 
         public async Task AddBookingAsync(BookingEntity booking)
         {
+            // Obtener el asiento
+            var seat = await _seatRepository.GetByIdAsync(booking.SeatId);
+        
+            if (seat == null)
+                throw new Exception("El asiento no existe.");
+        
+            if (!seat.Status)
+                throw new Exception("El asiento ya está ocupado.");
+        
+            // Marcar asiento como ocupado
+            seat.Status = false;
+            await _seatRepository.UpdateAsync(seat);
+        
+            // Guardar la reserva
             await _bookingRepository.AddAsync(booking);
         }
 

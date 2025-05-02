@@ -30,5 +30,16 @@ namespace CinemaReservation.Infrastructure.Repositories
 
             return allSeats.Where(s => !occupiedSeats.Contains(s.Id));
         }
+
+        public async Task<SeatEntity?> GetByIdAsync(int id)
+        {
+            return await _context.Seats.FindAsync(id);
+        }
+        
+        public async Task UpdateAsync(SeatEntity seat)
+        {
+            _context.Seats.Update(seat);
+            await _context.SaveChangesAsync();
+        }
     }
 }

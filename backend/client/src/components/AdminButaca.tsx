@@ -52,18 +52,6 @@ const AdminButaca = () => {
   const getMovieName = (id: number) =>
     movies.find(m => m.id === id)?.name ?? `#${id}`;
 
-  const toggleSeatAvailability = (seatId: number) => {
-    // Aquí, puedes implementar la lógica para cambiar el estado de disponibilidad de una butaca
-    const updatedSeats = seats.map(seat =>
-      seat.id === seatId
-        ? { ...seat, isAvailable: !seat.isAvailable } // Cambia el estado de disponibilidad de la butaca
-        : seat
-    );
-    setSeats(updatedSeats);
-    // Llamar al backend para actualizar la disponibilidad de la butaca
-    // (esta parte debes implementarla en el servicio)
-  };
-
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">Administración de Butacas</h2>
@@ -90,8 +78,7 @@ const AdminButaca = () => {
             {seats.map((seat) => (
               <div
                 key={seat.id}
-                className={`p-4 text-center cursor-pointer ${seat.isAvailable ? 'bg-green-500' : 'bg-red-500'}`}
-                onClick={() => toggleSeatAvailability(seat.id)}
+                className={`p-4 text-center ${seat.status ? 'bg-green-500' : 'bg-red-500'}`}
               >
                 Fila {seat.rowNumber} - Butaca {seat.seatNumber}
               </div>

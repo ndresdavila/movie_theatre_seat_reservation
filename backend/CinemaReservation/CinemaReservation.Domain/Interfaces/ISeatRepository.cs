@@ -7,5 +7,7 @@ namespace CinemaReservation.Domain.Interfaces
     public interface ISeatRepository : IRepository<SeatEntity>
     {
         Task<IEnumerable<SeatEntity>> GetAvailableSeatsInRoomAsync(int roomId);
+        Task<SeatEntity?> GetByIdAsync(int id);
+        Task UpdateAsync(SeatEntity seat);
     }
 }
