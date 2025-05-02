@@ -105,7 +105,13 @@ const AdminCartelera = () => {
               <tr key={b.id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 text-sm">{getMovieName(b.movieId)}</td>
                 <td className="px-4 py-2 text-sm">{getRoomName(b.roomId)}</td>
-                <td className="px-4 py-2 text-sm">{new Date(b.date).toLocaleDateString()}</td>
+                <td className="px-4 py-2 text-sm">
+  {(() => {
+    const [date] = b.date.split('T');
+    return date;
+  })()}
+</td>
+
                 <td className="px-4 py-2 space-x-2">
                   <button
                     onClick={() => handleEditBillboard(b.id)}
