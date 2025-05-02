@@ -1,10 +1,11 @@
-// AdminCartelera.tsx
 import React, { useEffect, useState } from 'react';
 import { getAllBillboards, deleteBillboard, getMovies, getRooms } from '../services/reservationService';
 import { Billboard } from '../types/Billboard';
 import { Movie } from '../types/Movie';
 import { Room } from '../types/Room';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'; // Importa react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Importa el CSS para el toast
 
 const AdminCartelera = () => {
   const [billboards, setBillboards] = useState<Billboard[]>([]);
@@ -13,7 +14,6 @@ const AdminCartelera = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 1) Cargo carteleras
     const fetchBillboards = async () => {
       try {
         const res = await getAllBillboards();
@@ -22,7 +22,6 @@ const AdminCartelera = () => {
         console.error("Error al obtener las carteleras", error);
       }
     };
-    // 2) Cargo películas
     const fetchMovies = async () => {
       try {
         const list = await getMovies();
@@ -31,7 +30,6 @@ const AdminCartelera = () => {
         console.error("Error al obtener películas", error);
       }
     };
-    // 3) Cargo salas
     const fetchRooms = async () => {
       try {
         const list = await getRooms();
@@ -50,9 +48,26 @@ const AdminCartelera = () => {
     try {
       await deleteBillboard(id);
       setBillboards(billboards.filter(b => b.id !== id));
-      alert("Cartelera eliminada exitosamente");
+      toast.success('Cartelera eliminada exitosamente!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
       console.error("Error al eliminar cartelera", error);
+      toast.error('Error al eliminar cartelera. Intenta nuevamente.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -60,7 +75,6 @@ const AdminCartelera = () => {
     navigate(`/editar-cartelera/${id}`);
   };
 
-  // Helper para mostrar nombre
   const getMovieName = (movieId: number) =>
     movies.find(m => m.id === movieId)?.name ?? `#${movieId}`;
   const getRoomName = (roomId: number) =>
@@ -117,6 +131,11 @@ const AdminCartelera = () => {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Agregar el contenedor de Toast en algún lugar de tu JSX */}
+      <div>
+        {/* Aquí se renderizan los Toasts */}
       </div>
     </div>
   );

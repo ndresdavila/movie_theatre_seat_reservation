@@ -5,6 +5,9 @@ import { CreateBillboardDto } from '../types/Billboard';
 import { getMovies, getRooms } from '../services/reservationService';
 import { Movie } from '../types/Movie';
 import { Room } from '../types/Room';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'; // Importa react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Importa los estilos de toastify
 
 type FormValues = {
   movieId: number;
@@ -17,7 +20,8 @@ type FormValues = {
 const FormularioAgregarCartelera = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>();
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [rooms, setRooms]   = useState<Room[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const navigate = useNavigate(); // Inicializa useNavigate
 
   useEffect(() => {
     (async () => {
@@ -31,24 +35,76 @@ const FormularioAgregarCartelera = () => {
   }, []);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    // Verifica si la fecha de inicio es mayor a la de fin
+    const startDateTime = new Date(`${data.date}T${data.startTime}:00`);
+    const endDateTime = new Date(`${data.date}T${data.endTime}:00`);
+    
+    if (startDateTime >= endDateTime) {
+      toast.error('La hora de inicio debe ser antes que la hora de fin.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
     // convierte YYYY-MM-DD a ISO UTC
     const isoDate = new Date(`${data.date}T00:00:00Z`).toISOString();
 
     const payload: CreateBillboardDto = {
-      movieId:   data.movieId,
-      roomId:    data.roomId,
-      date:      isoDate,
+      movieId: data.movieId,
+      roomId: data.roomId,
+      date: isoDate,
       startTime: data.startTime,
-      endTime:   data.endTime,
+      endTime: data.endTime,
     };
 
     try {
+      // Verifica si faltan campos obligatorios
+      if (!data.movieId || !data.roomId || !data.date || !data.startTime || !data.endTime) {
+        toast.error('Por favor, completa todos los campos requeridos.', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        return;
+      }
+
       await createBillboard(payload);
-      alert('Cartelera creada exitosamente');
+      toast.success('Cartelera creada exitosamente', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      // Espera que el toast desaparezca antes de redirigir
+      setTimeout(() => {
+        navigate('/admin-cartelera');
+      }, 1000); // Redirige después de que el mensaje de éxito se haya cerrado
       reset();
     } catch (error) {
       console.error('Error al crear cartelera', error);
-      alert('No se pudo crear la cartelera');
+      toast.error('No se pudo crear la cartelera. Intenta nuevamente.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 

@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ReservationProvider } from './context/ReservationContext';
+import { ToastContainer } from 'react-toastify'; // Importa el ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Importa los estilos de toastify
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ReservationProvider>
       <App />
+      {/* Agrega el ToastContainer aquí */}
+      <ToastContainer />
     </ReservationProvider>
   </React.StrictMode>
 );
