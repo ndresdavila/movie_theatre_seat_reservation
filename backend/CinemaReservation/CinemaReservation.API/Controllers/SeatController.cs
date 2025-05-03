@@ -3,6 +3,8 @@ using CinemaReservation.Application.Services;
 using CinemaReservation.Domain.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using CinemaReservation.Application.DTOs; // Asegúrate de tener los DTOs en este namespace
+using CinemaReservation.Application.Services; // Donde esté SeatAvailabilityService
 
 namespace CinemaReservation.API.Controllers
 {
@@ -11,10 +13,12 @@ namespace CinemaReservation.API.Controllers
     public class SeatController : ControllerBase
     {
         private readonly SeatService _seatService;
+        private readonly SeatAvailabilityService _seatAvailabilityService; // 👈 Servicio nuevo
 
-        public SeatController(SeatService seatService)
+        public SeatController(SeatService seatService, SeatAvailabilityService seatAvailabilityService)
         {
             _seatService = seatService;
+            _seatAvailabilityService = seatAvailabilityService;
         }
 
         // GET: api/seat
@@ -64,6 +68,14 @@ namespace CinemaReservation.API.Controllers
         {
             await _seatService.DeleteSeatAsync(id);
             return NoContent();
+        }
+
+        // NUEVO ENDPOINT: api/seat/availability/today
+        [HttpGet("availability/today")]
+        public async Task<ActionResult<IEnumerable<SeatAvailabilityDto>>> GetAvailabilityForToday()
+        {
+            var result = await _seatAvailabilityService.GetSeatAvailabilityForTodayAsync();
+            return Ok(result);
         }
     }
 }

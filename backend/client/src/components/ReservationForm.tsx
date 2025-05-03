@@ -91,11 +91,19 @@ const ReservationForm: React.FC = () => {
       };
 
       await createBooking(bookingDto);
-      toast.success('Reserva realizada con éxito');
+      toast.success('Reserva realizada con éxito!', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
 
       // después de 1 segundo, navegar y resetear
       setTimeout(() => {
-        reset();
+        //reset();
         navigate('/reservations');
       }, 1000);
     } catch (error) {

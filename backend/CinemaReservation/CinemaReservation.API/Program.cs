@@ -36,6 +36,7 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<SeatService>();
+builder.Services.AddScoped<SeatAvailabilityService>();
 builder.Services.AddScoped<BillboardService>();
 builder.Services.AddScoped<CancelBillboardService>();
 
