@@ -6,7 +6,7 @@ import { getAllCustomers, getMovies, getAllBillboards } from '../services/reserv
 import type { Customer } from '../types/Customer';
 import type { Movie } from '../types/Movie';
 import type { Billboard } from '../types/Billboard';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ReservationList: React.FC = () => {
@@ -78,20 +78,16 @@ const ReservationList: React.FC = () => {
         <table className="min-w-full divide-y divide-gray-200 bg-white">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">ID</th>
               <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Cliente</th>
               <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Película</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Fecha</th>
               <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {bookings.map((booking: any) => (
               <tr key={booking.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 text-sm">{booking.id}</td>
                 <td className="px-4 py-2 text-sm">{getCustomerName(booking.customerId)}</td>
                 <td className="px-4 py-2 text-sm">{getMovieName(booking.billboardId)}</td>
-                <td className="px-4 py-2 text-sm">{booking.date.split('.')[0].replace('T', ' ').slice(0, 16)}</td>
                 <td className="px-4 py-2">
                   <button
                     onClick={() => handleDelete(booking.id)}
@@ -112,9 +108,6 @@ const ReservationList: React.FC = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Contenedor para mostrar los toasts */}
-      <ToastContainer />
     </div>
   );
 };

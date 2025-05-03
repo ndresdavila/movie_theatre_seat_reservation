@@ -17,7 +17,7 @@ import type { Seat } from '../types/Seat';
 import type { Movie } from '../types/Movie';
 import type { Room } from '../types/Room';
 import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface FormValues {
@@ -222,8 +222,7 @@ const ReservationForm: React.FC = () => {
         </button>
       </form>
 
-      {/* Toast container */}
-      <ToastContainer position="top-right" autoClose={3000} />
+
     </div>
   );
 };
