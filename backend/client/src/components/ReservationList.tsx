@@ -63,6 +63,11 @@ const ReservationList: React.FC = () => {
     return m ? m.name : '–';
   };
 
+  const getMovieDate = (billboardId: number): string => {
+    const bill = billboards.find(b => b.id === billboardId);
+    return bill ? bill.date.split('T')[0] : '–';
+  };  
+
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Lista de Reservas</h2>
@@ -80,6 +85,7 @@ const ReservationList: React.FC = () => {
             <tr>
               <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Cliente</th>
               <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Película</th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Fecha</th>
               <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Acciones</th>
             </tr>
           </thead>
@@ -88,6 +94,7 @@ const ReservationList: React.FC = () => {
               <tr key={booking.id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 text-sm">{getCustomerName(booking.customerId)}</td>
                 <td className="px-4 py-2 text-sm">{getMovieName(booking.billboardId)}</td>
+                <td className="px-4 py-2 text-sm">{getMovieDate(booking.billboardId)}</td>
                 <td className="px-4 py-2">
                   <button
                     onClick={() => handleDelete(booking.id)}
