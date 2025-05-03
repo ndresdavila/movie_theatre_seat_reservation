@@ -1,8 +1,9 @@
 import axios from "axios";
 import { CreateBillboardDto, UpdateBillboardDto } from "../types/Billboard";
-import { CreateBookingDto } from "../types/Booking";
+import { Booking, CreateBookingDto } from "../types/Booking";
 import { CreateCustomerDto } from "../types/Customer";
 import { SeatAvailabilityDto } from "../types/SeatAvailabilityDto";
+import { format } from 'date-fns';
 
 const API_URL = "http://localhost:5096/api"; // o el que uses en desarrollo
 
@@ -86,3 +87,25 @@ export const getAllSeats = () => axios.get(`${API_URL}/seat`);
 export const getSeatAvailabilityToday = () =>
   axios.get<SeatAvailabilityDto[]>(`${API_URL}/seat/availability/today`);
 
+// Mostrar reservas de películas de terror en un rango de fechas
+export const getHorrorBookingsInRange = async (startDate: string, endDate: string) => {
+  // Convertir fechas a MM-DD-YYYY
+  const formattedStartDate = format(new Date(startDate), 'MM-dd-yyyy');
+  const formattedEndDate = format(new Date(endDate), 'MM-dd-yyyy');
+
+  const response = await axios.get(`${API_URL}/booking/horror`, {
+    params: {
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+    },
+  });
+  return response.data;
+};
+
+// Obtener película por ID
+export const getMovieById = async (billboardId: number) => {
+  const response = await axios.get(`${API_URL}/billboard/${billboardId}`);
+  const movieId = response.data.movieId; // Asumiendo que el MovieId está en la cartelera
+  const movieResponse = await axios.get(`${API_URL}/movie/${movieId}`);
+  return movieResponse.data;
+};

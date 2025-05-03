@@ -4,8 +4,8 @@ import { Billboard } from '../types/Billboard';
 import { Movie } from '../types/Movie';
 import { Room } from '../types/Room';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify'; // Importa react-toastify
-import 'react-toastify/dist/ReactToastify.css'; // Importa el CSS para el toast
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminCartelera = () => {
   const [billboards, setBillboards] = useState<Billboard[]>([]);
@@ -44,7 +44,23 @@ const AdminCartelera = () => {
     fetchRooms();
   }, []);
 
-  const handleDeleteBillboard = async (id: number) => {
+  const handleDeleteBillboard = async (id: number, dateStr: string) => {
+    const functionDate = new Date(dateStr).setHours(0, 0, 0, 0);
+    const today = new Date().setHours(0, 0, 0, 0);
+
+    if (functionDate < today) {
+      toast.error('No se puede cancelar funciones de la cartelera con fecha anterior a la actual', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
     try {
       await deleteBillboard(id);
       setBillboards(billboards.filter(b => b.id !== id));
@@ -101,33 +117,30 @@ const AdminCartelera = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {billboards.map(b => (
-              <tr key={b.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 text-sm">{getMovieName(b.movieId)}</td>
-                <td className="px-4 py-2 text-sm">{getRoomName(b.roomId)}</td>
-                <td className="px-4 py-2 text-sm">
-  {(() => {
-    const [date] = b.date.split('T');
-    return date;
-  })()}
-</td>
-
-                <td className="px-4 py-2 space-x-2">
-                  <button
-                    onClick={() => handleEditBillboard(b.id)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded transition"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => handleDeleteBillboard(b.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded transition"
-                  >
-                    Eliminar
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {billboards.map(b => {
+              const [date] = b.date.split('T');
+              return (
+                <tr key={b.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 text-sm">{getMovieName(b.movieId)}</td>
+                  <td className="px-4 py-2 text-sm">{getRoomName(b.roomId)}</td>
+                  <td className="px-4 py-2 text-sm">{date}</td>
+                  <td className="px-4 py-2 space-x-2">
+                    <button
+                      onClick={() => handleEditBillboard(b.id)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded transition"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => handleDeleteBillboard(b.id, b.date)}
+                      className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded transition"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
             {billboards.length === 0 && (
               <tr>
                 <td colSpan={4} className="px-4 py-4 text-center text-sm text-gray-500">
@@ -137,11 +150,6 @@ const AdminCartelera = () => {
             )}
           </tbody>
         </table>
-      </div>
-
-      {/* Agregar el contenedor de Toast en algún lugar de tu JSX */}
-      <div>
-        {/* Aquí se renderizan los Toasts */}
       </div>
     </div>
   );

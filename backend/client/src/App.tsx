@@ -8,6 +8,7 @@ import ReservationForm from './components/ReservationForm';
 import ReservationList from './components/ReservationList';
 import FormularioAgregarCartelera from './components/FormularioAgregarCartelera';
 import EditBillboard from './components/EditBillboard';
+import HorrorBookings from './components/HorrorBookings';
 import { JSX } from 'react';
 
 const Home = (): JSX.Element => (
@@ -34,6 +35,13 @@ const Home = (): JSX.Element => (
       >
         Administrar Butacas
       </Link>
+      <Link
+  to="/reservas-terror"
+  className="inline-block bg-black text-white font-bold py-3 px-6 rounded-lg border-2 border-red-700 shadow-red-800 shadow-lg hover:bg-red-900 hover:text-white transition-all duration-300 tracking-wider"
+>
+  Reservas de Películas de Terror
+</Link>
+
     </nav>
   </div>
 );
@@ -53,6 +61,7 @@ const App = (): JSX.Element => {
           <Route path="/formulario-agregar-cartelera" element={<FormularioAgregarCartelera />} />
           <Route path="/reservations" element={<ReservationList />} />
           <Route path="/formulario-agregar-reserva" element={<ReservationForm />} />
+          <Route path="/reservas-terror" element={<HorrorBookings />} />
         </Routes>
       </main>
     </Router>

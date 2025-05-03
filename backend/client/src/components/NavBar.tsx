@@ -5,6 +5,7 @@ const links = [
   { to: '/admin-cartelera', label: 'Cartelera' },
   { to: '/reservations', label: 'Reservas' },
   { to: '/admin-butaca', label: 'Butacas' },
+  { to: '/reservas-terror', label: 'Reservas de Pelícluas de Terror' },
 ];
 
 export default function NavBar() {

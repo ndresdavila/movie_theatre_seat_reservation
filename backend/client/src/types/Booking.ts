@@ -8,8 +8,9 @@ export interface CreateBookingDto {
   
   export interface Booking {
     id: number;
+    customerId: number;    // Añadido para obtener el id del cliente
+    billboardId: number;   // Añadido para obtener el id de la cartelera
     movieName: string;
     customerName: string;
-    date: string; // puede ser Date si ya viene como objeto Date
+    date: string; // Puede ser Date si ya viene como objeto Date
   }
-  
