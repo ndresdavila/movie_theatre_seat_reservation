@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { getHorrorBookingsInRange } from '../services/reservationService';
 import { Booking } from '../types/Booking';
-import { format } from 'date-fns';
 
 const HorrorBookings = () => {
   const [startDate, setStartDate] = useState('');
