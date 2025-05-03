@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { getAllBillboards, deleteBillboard, getMovies, getRooms } from '../services/reservationService';
+import { getAllBillboards, getMovies, getRooms, deleteBooking, cancelBillboard } from '../services/reservationService';
 import { Billboard } from '../types/Billboard';
 import { Movie } from '../types/Movie';
 import { Room } from '../types/Room';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Booking } from '../types/Booking';
+import axios from 'axios';
+import { Customer } from '../types/Customer';
+
+const API_URL = "http://localhost:5096/api";
 
 const AdminCartelera = () => {
   const [billboards, setBillboards] = useState<Billboard[]>([]);
@@ -47,7 +52,7 @@ const AdminCartelera = () => {
   const handleDeleteBillboard = async (id: number, dateStr: string) => {
     const functionDate = new Date(dateStr).setHours(0, 0, 0, 0);
     const today = new Date().setHours(0, 0, 0, 0);
-
+  
     if (functionDate < today) {
       toast.error('No se puede cancelar funciones de la cartelera con fecha anterior a la actual', {
         position: 'top-right',
@@ -60,11 +65,47 @@ const AdminCartelera = () => {
       });
       return;
     }
-
+  
     try {
-      await deleteBillboard(id);
+      // Obtener todas las reservas asociadas a la cartelera
+      const bookingsResponse = await axios.get(`${API_URL}/booking`, {
+        params: { billboardId: id }, // Suponiendo que existe un parámetro para filtrar por billboardId
+      });
+      
+      const bookings = bookingsResponse.data;
+      const customerPromises = bookings.map(async (booking: Booking) => {
+        const customerResponse = await axios.get(`${API_URL}/customer/${booking.customerId}`);
+        return customerResponse.data;
+      });
+  
+      const customers = await Promise.all(customerPromises);
+  
+      // Mostrar los datos de los clientes
+      const customerNames = customers.length > 0
+      ? customers.map((customer: Customer) => `${customer.name} ${customer.lastname}`).join(', ')
+      : 'Ninguno';
+      console.log(`Los siguientes clientes tienen reservas en esta cartelera: ${customerNames}`);
+      
+      // Mostrar los nombres de los clientes
+      toast.info(`Los siguientes clientes tienen reservas en esta cartelera: ${customerNames}`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+  
+      // Eliminar las reservas
+      for (let booking of bookings) {
+        await deleteBooking(booking.id);
+      }
+  
+      // Finalmente eliminar la cartelera
+      await cancelBillboard(id);
       setBillboards(billboards.filter(b => b.id !== id));
-      toast.success('Cartelera eliminada exitosamente!', {
+      toast.success('Cartelera eliminada y reservas canceladas exitosamente!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -86,6 +127,7 @@ const AdminCartelera = () => {
       });
     }
   };
+  
 
   const handleEditBillboard = (id: number) => {
     navigate(`/editar-cartelera/${id}`);

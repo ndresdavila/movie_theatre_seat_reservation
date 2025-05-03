@@ -1,6 +1,6 @@
 import axios from "axios";
 import { CreateBillboardDto, UpdateBillboardDto } from "../types/Billboard";
-import { Booking, CreateBookingDto } from "../types/Booking";
+import { CreateBookingDto } from "../types/Booking";
 import { CreateCustomerDto } from "../types/Customer";
 import { SeatAvailabilityDto } from "../types/SeatAvailabilityDto";
 import { format } from 'date-fns';
@@ -22,10 +22,6 @@ export const getBillboardById = (id: number) => {
 
 export const cancelBillboard = (id: number) => {
   return axios.post(`${API_URL}/billboard/cancel/${id}`); // POST /api/billboard/cancel/{id}
-};
-
-export const cancelBillboardAndReservations = (id: number) => {
-  return axios.delete(`${API_URL}/billboard/cancel-with-reservations/${id}`); // DELETE /api/billboard/cancel-with-reservations/{id}
 };
 
 // Booking endpoints
