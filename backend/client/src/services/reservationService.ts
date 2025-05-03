@@ -2,6 +2,7 @@ import axios from "axios";
 import { CreateBillboardDto, UpdateBillboardDto } from "../types/Billboard";
 import { CreateBookingDto } from "../types/Booking";
 import { CreateCustomerDto } from "../types/Customer";
+import { SeatAvailabilityDto } from "../types/SeatAvailabilityDto";
 
 const API_URL = "http://localhost:5096/api"; // o el que uses en desarrollo
 
@@ -80,3 +81,8 @@ export const deleteBooking = (id: number) => {
 
 // Butacas
 export const getAllSeats = () => axios.get(`${API_URL}/seat`);
+
+/** Disponibilidad de asientos para hoy (todas las salas) */
+export const getSeatAvailabilityToday = () =>
+  axios.get<SeatAvailabilityDto[]>(`${API_URL}/seat/availability/today`);
+

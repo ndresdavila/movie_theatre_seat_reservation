@@ -12,53 +12,54 @@ public class SeatAvailabilityService
     }
 
     public async Task<List<SeatAvailabilityDto>> GetSeatAvailabilityForTodayAsync()
-    {
-        var today = DateTime.UtcNow.Date;
-
-        var billboardsToday = await _context.Billboards
-            .Include(b => b.Room)
-            .Where(b => b.Date == today && b.Status)
-            .ToListAsync();
-
-        var result = new List<SeatAvailabilityDto>();
-
-        foreach (var billboard in billboardsToday)
         {
-            var roomId = billboard.RoomId;
-
-            // Todas las butacas de la sala
-            var seatsInRoom = await _context.Seats
-                .Where(s => s.RoomId == roomId && s.Status)
+            var today = DateTime.UtcNow.Date;
+            
+            // 1) Trae todas las salas
+            var rooms = await _context.Rooms.ToListAsync();
+            
+            // 2) Trae TODAS las reservas de hoy (incluye Seat y Billboard)
+            var bookingsToday = await _context.Bookings
+                .Include(b => b.Seat)
+                .Include(b => b.Billboard)
+                .Where(b => b.Status && b.Billboard != null && b.Billboard.Date.Date == today)
                 .ToListAsync();
 
-            var seatIds = seatsInRoom.Select(s => s.Id).ToList();
+            var result = new List<SeatAvailabilityDto>();
 
-            // Butacas ocupadas para esta cartelera
-            var bookedSeatIds = await _context.Bookings
-                .Where(b => b.BillboardId == billboard.Id && seatIds.Contains(b.SeatId) && b.Status)
-                .Select(b => b.SeatId)
-                .ToListAsync();
-
-            var occupied = seatsInRoom.Where(s => bookedSeatIds.Contains(s.Id)).ToList();
-            var available = seatsInRoom.Where(s => !bookedSeatIds.Contains(s.Id)).ToList();
-
-            result.Add(new SeatAvailabilityDto
+            foreach (var room in rooms)
             {
-                BillboardId = billboard.Id,
-                RoomName = billboard.Room?.Name ?? "Sin nombre",
-                TotalSeats = seatsInRoom.Count,
-                OccupiedSeats = occupied.Count,
-                AvailableSeats = available.Count,
-                SeatDetails = seatsInRoom.Select(s => new SeatDto
-                {
-                    Id = s.Id,
-                    Number = s.Number,
-                    Row = s.RowNumber,
-                    IsOccupied = bookedSeatIds.Contains(s.Id)
-                }).ToList()
-            });
-        }
+                // 3) Todas las butacas activas de esta sala
+                var seatsInRoom = await _context.Seats
+                    .Where(s => s.RoomId == room.Id)
+                    .ToListAsync();
 
-        return result;
-    }
+                // 4) IDs de las butacas reservadas para la sala hoy
+                var bookedIds = bookingsToday
+                    .Where(b => b.Seat != null && b.Seat.RoomId == room.Id)
+                    .Select(b => b.SeatId)
+                    .Distinct()
+                    .ToHashSet();
+
+                // 5) Construye la lista de detalles marcando isOccupied
+                var details = seatsInRoom.Select(s => new SeatDto
+                {
+                    Id         = s.Id,
+                    Number     = s.Number,
+                    Row        = s.RowNumber,
+                    IsOccupied = bookedIds.Contains(s.Id)
+                }).ToList();
+
+                result.Add(new SeatAvailabilityDto
+                {
+                    RoomName      = room.Name,
+                    TotalSeats    = seatsInRoom.Count,
+                    OccupiedSeats = bookedIds.Count,
+                    AvailableSeats= seatsInRoom.Count - bookedIds.Count,
+                    SeatDetails   = details
+                });
+            }
+
+            return result;
+        }
 }

@@ -70,7 +70,7 @@ namespace CinemaReservation.API.Controllers
             return NoContent();
         }
 
-        // NUEVO ENDPOINT: api/seat/availability/today
+        // GET: api/seat/availability/today
         [HttpGet("availability/today")]
         public async Task<ActionResult<IEnumerable<SeatAvailabilityDto>>> GetAvailabilityForToday()
         {
