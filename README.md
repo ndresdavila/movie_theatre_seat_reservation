@@ -1,4 +1,4 @@
-# Movie Theatre Seat Reservation
+# Reserva de Butacas de Cine
 
 Este repositorio contiene dos aplicaciones:
 
