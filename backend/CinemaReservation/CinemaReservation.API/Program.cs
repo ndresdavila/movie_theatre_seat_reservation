@@ -142,12 +142,88 @@ using (var scope = app.Services.CreateScope())
         date: pastDate.Date,
         startTime: new TimeSpan(18, 0, 0),
         endTime: new TimeSpan(20, 30, 0),
-        movieId: movies[0].Id,
+        movieId: movies[1].Id,
         roomId: rooms[0].Id
     )
     { Id = 101 };
 
     db.Billboards.AddRange(billboard1, billboard2);
+    db.SaveChanges();
+
+    // 1) Cartelera para HOY en Sala 3D
+    var room3D = db.Rooms.Single(r => r.Name == "Sala 3D");
+    var todayDate = DateTime.UtcNow.Date;
+
+    var todayBillboard = new BillboardEntity(
+        date: todayDate,
+        startTime: TimeSpan.FromHours(14),
+        endTime:   TimeSpan.FromHours(16),
+        movieId:   movies[2].Id,     // Por ejemplo la primera película
+        roomId:    room3D.Id
+    );
+    db.Billboards.Add(todayBillboard);
+    db.SaveChanges();
+
+    // Creamos un cliente para la reserva de hoy
+    var customerToday = new CustomerEntity(
+        documentNumber: "CUST-TODAY",
+        name:           "Jaime",
+        lastname:       "Nebot",
+        age:            30,
+        phoneNumber:    "000-0000",
+        email:          "hoy@example.com"
+    );
+    db.Customers.Add(customerToday);
+    db.SaveChanges();
+
+    // Tomamos el primer asiento de la Sala 3D
+    var seat3D = db.Seats.First(s => s.RoomId == room3D.Id);
+
+    var bookingToday = new BookingEntity(
+        date:         DateTime.UtcNow,
+        customerId:   customerToday.Id,
+        seatId:       seat3D.Id,
+        billboardId:  todayBillboard.Id
+    );
+    db.Bookings.Add(bookingToday);
+    db.SaveChanges();
+
+    // 2) Cartelera de THE CONJURING en Sala VIP
+    var roomVIP = db.Rooms.Single(r => r.Name == "Sala VIP");
+    var conjuringMovie = db.Movies.Single(m => m.Name == "The Conjuring");
+
+    var conjuringBillboard = new BillboardEntity(
+        date:      todayDate,
+        startTime: TimeSpan.FromHours(18),
+        endTime:   TimeSpan.FromHours(20),
+        movieId:   conjuringMovie.Id,
+        roomId:    roomVIP.Id
+    );
+    db.Billboards.Add(conjuringBillboard);
+    db.SaveChanges();
+
+    // Creamos un cliente para The Conjuring
+    var customerConjuring = new CustomerEntity(
+        documentNumber: "CUST-CONJURING",
+        name:           "Guillermo",
+        lastname:       "Lasso",
+        age:            28,
+        phoneNumber:    "111-1111",
+        email:          "fan@example.com"
+    );
+    db.Customers.Add(customerConjuring);
+    db.SaveChanges();
+
+    // Tomamos el primer asiento de la Sala VIP
+    var seatVIP = db.Seats.First(s => s.RoomId == roomVIP.Id);
+
+    var bookingConjuring = new BookingEntity(
+        date:         DateTime.UtcNow,
+        customerId:   customerConjuring.Id,
+        seatId:       seatVIP.Id,
+        billboardId:  conjuringBillboard.Id
+    );
+    db.Bookings.Add(bookingConjuring);
     db.SaveChanges();
 }
 
