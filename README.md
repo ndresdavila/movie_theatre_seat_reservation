@@ -25,11 +25,11 @@ La carpeta del backend está en `backend/CinemaReservation.API`.
 ### Pre-requisitos
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
-- Docker (para levantar PostgreSQL en contenedor) y Docker Compose opcionalmente
+- Docker (para levantar PostgreSQL en contenedor)
 
 ### Configuración de la base de datos
 
-En lugar de instalar PostgreSQL localmente, puedes usar Docker para levantar un contenedor:
+En lugar de instalar PostgreSQL localmente, puede usar Docker para levantar un contenedor:
 
 ```bash
 docker run -d --name postgres-cinema \
@@ -40,7 +40,7 @@ docker run -d --name postgres-cinema \
   postgres:15
 ```
 
-Tu `appsettings.json` ya está configurado para conectar a `localhost:5432`:
+El archivo `appsettings.json` ya está configurado para conectar a `localhost:5432`:
 
 ```json
 {
@@ -69,7 +69,7 @@ dotnet run --urls "http://localhost:5096"
 
 ### Swagger UI
 
-En modo desarrollo, puedes acceder a:
+En modo desarrollo, puede acceder a:
 
 ```
 http://localhost:5096/swagger
