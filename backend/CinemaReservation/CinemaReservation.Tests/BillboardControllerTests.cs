@@ -119,7 +119,7 @@ namespace CinemaReservation.Tests
         }
 
         [Fact]
-        public async Task CancelBillboardWithReservations_CancelsBillboardReservationsAndEnablesSeats()
+        public async Task CancelBillboardWithReservations_CancelsBillboardAndReservationsAndEnablesSeats()
         {
             // Arrange
             await using var scope = _factory.Services.CreateAsyncScope();
@@ -170,23 +170,24 @@ namespace CinemaReservation.Tests
 
             // Assert: HTTP 204 No Content
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-
-            // Verificar cartelera cancelada
-            var updatedBillboard = await db.Billboards.FindAsync(billboard.Id);
-            Assert.False(updatedBillboard!.Status);
-
-
-
-            // Verificar que las reservas de la cartelera ya no existan (eliminadas)
-            var bookingsForBillboard = db.Bookings
-                .Where(b => b.BillboardId == billboard.Id)
-                .ToList();
-            Assert.Empty(bookingsForBillboard);
-
-            // Verificar butaca habilitada
-            var updatedSeat = await db.Seats.FindAsync(seat.Id);
-            Assert.True(updatedSeat!.Status);
-
+            
+            // Obtener un nuevo scope para validar los cambios en BD
+            await using var verifyScope = _factory.Services.CreateAsyncScope();
+            var verifyDb = verifyScope.ServiceProvider.GetRequiredService<CinemaDbContext>();
+            
+            // Refrescar entidades desde la base
+            var updatedBillboard = await verifyDb.Billboards.FindAsync(billboard.Id);
+            var updatedBooking = await verifyDb.Bookings.FindAsync(booking.Id);
+            var updatedSeat = await verifyDb.Seats.FindAsync(seat.Id);
+            
+            // Verificar que la cartelera haya sido eliminada
+            Assert.Null(updatedBillboard);
+            
+            // Verificar que la reserva haya sido eliminada
+            Assert.Null(updatedBooking);
+            
+            // Verificar que la butaca haya sido habilitada nuevamente
+            Assert.True(updatedSeat!.Status, "La butaca debe estar habilitada nuevamente");
         }
 
     }
