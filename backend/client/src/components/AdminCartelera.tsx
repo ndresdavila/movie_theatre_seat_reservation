@@ -72,7 +72,7 @@ const AdminCartelera = () => {
         params: { billboardId: id }, // Suponiendo que existe un parámetro para filtrar por billboardId
       });
       
-      const bookings = bookingsResponse.data;
+      const bookings = bookingsResponse.data.filter((b: { billboardId: number; }) => b.billboardId === id);
       const customerPromises = bookings.map(async (booking: Booking) => {
         const customerResponse = await axios.get(`${API_URL}/customer/${booking.customerId}`);
         return customerResponse.data;
